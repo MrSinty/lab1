@@ -64,7 +64,7 @@ bool CheckSafe()
             >> died_from_starving >> arrived_to_city >> gathered_wheat >> wheat_from_one_acre
             >> wheat_rats_ate >> player_buys_acres >> player_sells_acres >> wheat_for_eating
             >> wheat_for_seeding;
-            for (int j = 0; j < AMNT_OF_YEARS; ++j)
+            for (int j = 0; j < kAmntOfYears; ++j)
                 isafe >> starve_deaths[j];
             isOpened = true;
         }
@@ -95,7 +95,7 @@ void MakeSafe()
             << " " << isDrought << " " << died_from_starving << " " << arrived_to_city << " " << gathered_wheat << " " 
             << wheat_from_one_acre << " " << wheat_rats_ate << " " << player_buys_acres << " " << player_sells_acres << " " 
             << wheat_for_eating << " " << wheat_for_seeding << " ";
-            for (int j = 0; j < AMNT_OF_YEARS; ++j)
+            for (int j = 0; j < kAmntOfYears; ++j)
                 osafe << starve_deaths[j] << " ";
 
             cout << "Игра сохранена";
@@ -111,17 +111,17 @@ void MakeSafe()
 
 void MakeOneTurn()
 {
-    wheat_from_one_acre = random(MIN_WHEAT_FROM_ONE_ACRE, MAX_WHEAT_FROM_ONE_ACRE);
-    int avail_area = wheat_for_seeding / WHEAT_PER_ACRE; // куда уходит wheat_for_seeding если ее больше чем территории?
+    wheat_from_one_acre = random(kMinWheatFromOneAcre, kMaxWheatFromOneAcre);
+    int avail_area = wheat_for_seeding / kWheatPerAcre; // куда уходит wheat_for_seeding если ее больше чем территории?
     int extra_wheat = 0;
     if (avail_area > city_area)
     {
-        extra_wheat = (avail_area - city_area) * WHEAT_PER_ACRE;
+        extra_wheat = (avail_area - city_area) * kWheatPerAcre;
         avail_area = city_area;
     }
 
 
-    int peasant_cant_harvest = (avail_area - (population * PEASANT_MAX_AREA)) * wheat_from_one_acre;
+    int peasant_cant_harvest = (avail_area - (population * kPeasantMaxArea)) * wheat_from_one_acre;
 
     if (peasant_cant_harvest > 0)
         gathered_wheat = (wheat_from_one_acre * avail_area) - peasant_cant_harvest;
@@ -130,22 +130,22 @@ void MakeOneTurn()
 
     available_wheat += gathered_wheat + extra_wheat;
 
-    wheat_rats_ate = random(MIN_RATS_ATE_AMPL, MAX_RATS_ATE_AMPL) * available_wheat;
+    wheat_rats_ate = random(kMinRatsAteAmpl, kMaxRatsAteAmpl) * available_wheat;
     available_wheat -= wheat_rats_ate;
 
     died_from_starving = 0;
-    if (population * PEASANT_EAT_WHEAT > wheat_for_eating)
+    if (population * kPeasantEatWheat > wheat_for_eating)
     {
-        died_from_starving = population - (wheat_for_eating / PEASANT_EAT_WHEAT); 
+        died_from_starving = population - (wheat_for_eating / kPeasantEatWheat); 
         // остается ли остаток пшеницы, если последнему человеку осталось немного, но не достаточно?
     }
     else
     {
-        available_wheat = available_wheat - population * PEASANT_EAT_WHEAT + wheat_for_eating;
+        available_wheat = available_wheat - population * kPeasantEatWheat + wheat_for_eating;
     }
 
     starve_deaths[year-1] = (float)died_from_starving / (float)population; // логирование среднегодовой смертности
-    if (starve_deaths[year-1] > MAX_DIED_FROM_STARVING)
+    if (starve_deaths[year-1] > kMaxDiedFromStarving)
     {
         lost = true;
     }
@@ -164,7 +164,7 @@ void MakeOneTurn()
         arrived_to_city = 50;
     population += arrived_to_city;
 
-    if (random((float)0, (float)1) <= PLAGUE_CHANCE)
+    if (random((float)0, (float)1) <= kPlagueChance)
     {
         isPlague = true;
         population /= 2;
@@ -172,7 +172,7 @@ void MakeOneTurn()
     else
         isPlague = false;
 
-    if (random((float)0, (float)1) <= DROUGHT_CHANCE)
+    if (random((float)0, (float)1) <= kDroughtChance)
     {
         gathered_wheat /= 2;
         isDrought = true;
@@ -232,7 +232,7 @@ void ShowSituation()
     cout << "Город сейчас занимает " << city_area << " акров;\n";
 }
 
-void MakeNewAcrePrice() { acre_price = random(MIN_ACRE_PRICE, MAX_ACRE_PRICE); }
+void MakeNewAcrePrice() { acre_price = random(kMinAcrePrice, kMaxAcrePrice); }
 
 void ShowAcrePrice() { cout << "Один акр земли стоит ныне " << acre_price << " бушелей.\n\n"; }
 
@@ -373,7 +373,7 @@ int random(const short min, const short max)
 int main (int argc, char* argv[])
 {
     srand(time(0));
-    for (int i = 0; i < AMNT_OF_YEARS; ++i)
+    for (int i = 0; i < kAmntOfYears; ++i)
         starve_deaths[i] = 0;
     StartGame();
 }

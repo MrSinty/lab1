@@ -8,24 +8,24 @@
 
 using namespace std;
 
-const short AMNT_OF_YEARS = 10;
+const short kAmntOfYears = 10;
 
-const short MIN_ACRE_PRICE = 17;
-const short MAX_ACRE_PRICE = 26;
+const short kMinAcrePrice = 17;
+const short kMaxAcrePrice = 26;
 
-const short MIN_WHEAT_FROM_ONE_ACRE = 1;
-const short MAX_WHEAT_FROM_ONE_ACRE = 6;
+const short kMinWheatFromOneAcre = 1;
+const short kMaxWheatFromOneAcre = 6;
 
-const float MIN_RATS_ATE_AMPL = 0;
-const float MAX_RATS_ATE_AMPL = 0.07;
+const float kMinRatsAteAmpl = 0;
+const float kMaxRatsAteAmpl = 0.07;
 
-const short PEASANT_EAT_WHEAT = 20;
-const float MAX_DIED_FROM_STARVING = 0.45;
-const float PLAGUE_CHANCE = 0.15;
-const float DROUGHT_CHANCE = 0.20;
+const short kPeasantEatWheat = 20;
+const float kMaxDiedFromStarving = 0.45;
+const float kPlagueChance = 0.15;
+const float kDroughtChance = 0.20;
 
-const short PEASANT_MAX_AREA = 10;
-const float WHEAT_PER_ACRE = 0.5;
+const short kPeasantMaxArea = 10;
+const float kWheatPerAcre = 0.5;
 
 unsigned short year = 1;
 bool lost = false;
@@ -51,7 +51,7 @@ int player_sells_acres = 0;
 int wheat_for_eating = 0;
 int wheat_for_seeding = 0;
 
-float starve_deaths[AMNT_OF_YEARS];
+float starve_deaths[kAmntOfYears];
 float mean_year_deaths = 0;
 float acres_for_one_peasant = 0;
 
